@@ -15,8 +15,8 @@ interface IContent extends Document{
 }
 
 interface ILink extends Document{
-    type : String,
-
+    hash : String,
+    userId : mongoose.Types.ObjectId
 }
 
 
@@ -36,7 +36,8 @@ const Content = new Schema<IContent>({
 
 
 const Link = new Schema<ILink>({
-
+    hash : String,
+    userId : {type : Schema.Types.ObjectId, ref : "User", required : true}
 })
 
 
@@ -44,4 +45,4 @@ const user = model<IUser>("User", User);
 const content = model<IContent>("Content", Content);
 const link = model<ILink>("Link", Link);
 
-export {user, content, Link}
+export {user, content, link}

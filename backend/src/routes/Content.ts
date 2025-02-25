@@ -3,18 +3,18 @@ import AuthMiddleware from "./middleware";
 import { content } from "../db"
 import Z from "zod";
 
+const ContentRouter = express.Router();
+
+
 const Content = Z.object({
     type : Z.string(),
     Link : Z.string()
 });
 
-
-const ContentRouter = express.Router();
-
 //  add crud operations, vector db, frontend UI, UX good one and done, drag and drop maybe.
 
 // create the thread to be saved..  inputs : type : content, Link : for saving some online post.
-const create = async(req : Request, res : Response)=>{
+const create = async (req: Request, res: Response): Promise<Response> => {
     const content_check  = Content.safeParse(req.body);
     if(!content_check.success){
         return res.status(400).send("Content can't be validated...");
@@ -84,9 +84,12 @@ const _delete = async(req : Request, res : Response)=>{
     }
 }
 
-ContentRouter.post("/create", AuthMiddleware, create);
-ContentRouter.delete("/deleteP",AuthMiddleware,  _delete);
-ContentRouter.put("/Edit", AuthMiddleware, updateContent);
-ContentRouter.get("/Read", AuthMiddleware, getContent);
+
+ContentRouter.post("/create", create);
+ContentRouter.post("/delete", _delete);
+ContentRouter.post("/update", updateContent);
+ContentRouter.post("/get", getContent);
+
+
 
 export default ContentRouter;
