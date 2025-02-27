@@ -1,11 +1,17 @@
 import { BrowserRouter, Route } from "react-router-dom";
 import { Routes } from "react-router";
 import Landing from "./app/Landing";
+import Home from "./app/Home";
+
 
 const App: React.FC = () => {
   const routes = [
     {
-      path: "/",
+      path : "/",
+      element : <Home />
+    },
+    {
+      path: "/Landing",
       element: <Landing />,
     },
   ];

@@ -1,12 +1,12 @@
 import { FC } from "react";
 import { X } from 'lucide-react';
 
-interface SignupProps {
+interface LoginProps {
     open: boolean;
     onClose: () => void;
 }
 
-const ContentModel: FC<SignupProps> = ({ open, onClose }) => {
+const Login: FC<LoginProps> = ({ open, onClose }) => {
     return (
         <>
             {
@@ -17,22 +17,22 @@ const ContentModel: FC<SignupProps> = ({ open, onClose }) => {
                         </div>
                         <div className="bg-white shadow-lg w-max h-max py-10 flex flex-col">
                             <div className="flex justify-center"> 
-                                <h1 className="text-xl">Create a Post</h1>
+                                <h1 className="text-xl">LogIn to your Account</h1>
                             </div>
                             <div className="flex flex-col gap-5 py-10 px-10">
                                 <input
                                     type="text"
                                     className="border border-gray-300 py-3 px-5 rounded-l focus:outline-none "
-                                    placeholder="Post Heading : "
+                                    placeholder="Enter Name : "
                                 />
                                 <input
                                     type="text"
                                     className="border border-gray-300 py-3 px-5 rounded-l focus:outline-none"
-                                    placeholder="Post Address: "
+                                    placeholder="Enter Password"
                                 />
                             </div>
                             <div className="flex justify-center">
-                                <button className="bg-black py-2 px-8 rounded text-white cursor-pointer hover:bg-fuchsia-600 transition duration-200">Create</button>
+                                <button className="bg-black py-2 px-8 rounded text-white cursor-pointer hover:bg-fuchsia-600 transition duration-200">SignIn</button>
                             </div>
                         </div>
                     </div>
@@ -42,4 +42,4 @@ const ContentModel: FC<SignupProps> = ({ open, onClose }) => {
     )
 }
 
-export default ContentModel;
+export default Login;

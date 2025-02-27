@@ -6,7 +6,7 @@ interface SignupProps {
     onClose: () => void;
 }
 
-const ContentModel: FC<SignupProps> = ({ open, onClose }) => {
+const Signup: FC<SignupProps> = ({ open, onClose }) => {
     return (
         <>
             {
@@ -17,18 +17,18 @@ const ContentModel: FC<SignupProps> = ({ open, onClose }) => {
                         </div>
                         <div className="bg-white shadow-lg w-max h-max py-10 flex flex-col">
                             <div className="flex justify-center"> 
-                                <h1 className="text-xl">Create a Post</h1>
+                                <h1 className="text-xl">Create An Account</h1>
                             </div>
                             <div className="flex flex-col gap-5 py-10 px-10">
                                 <input
                                     type="text"
                                     className="border border-gray-300 py-3 px-5 rounded-l focus:outline-none "
-                                    placeholder="Post Heading : "
+                                    placeholder="Enter Name : "
                                 />
                                 <input
                                     type="text"
                                     className="border border-gray-300 py-3 px-5 rounded-l focus:outline-none"
-                                    placeholder="Post Address: "
+                                    placeholder="Enter Password"
                                 />
                             </div>
                             <div className="flex justify-center">
@@ -42,4 +42,4 @@ const ContentModel: FC<SignupProps> = ({ open, onClose }) => {
     )
 }
 
-export default ContentModel;
+export default Signup;
