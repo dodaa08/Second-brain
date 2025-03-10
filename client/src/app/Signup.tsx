@@ -1,7 +1,7 @@
 import { FC, useRef } from "react";
 import { X } from 'lucide-react';
 import axios from "axios";
-import { useNavigate } from "react-router";
+
 
 interface SignupProps {
     open: boolean;
