@@ -1,23 +1,34 @@
-import { Twitter } from 'lucide-react';
+import {  Twitter } from 'lucide-react';
 import { Youtube } from 'lucide-react';
-import { Brain } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { FC } from 'react';
+
+import {Brain} from "../icons/Brain";
+
+interface SidebarI{
+    showx : ()=>void,
+    showyt : ()=>void   
+}
 
 
-const Sidebar = ()=>{
+
+const Sidebar : FC<SidebarI> = ({showx, showyt})=>{
+    const handle = ()=>{
+        location.reload();
+    }
     return (
         <>
-        <div className="h-screen w-64 bg-gray-100 text-black/95">
-            <div className="flex py-5 px-5">
-                <Link to="/">
-                <h1 className="text-3xl flex gap-2 cursor-pointer"> <div className='py-2'>{<Brain></Brain>}</div>Brainly  </h1>
-                </Link>
+        <div className="min-h-screen w-72 text-black/95 bg-white">
+            <div className="flex py-10 px-5">
+                <div onClick={handle}>
+                <h1 className="text-3xl flex gap-2 cursor-pointer font-medium"> <div className='py-2'></div>  <div className=''> <Brain /></div> Think. </h1>
+                </div>
+           
             </div>
-            <div className="flex flex-col justify-center items-center py-20  gap-5">
+            <div className="flex flex-col  px-5 py-20  gap-2">
                 
-                <div className="text-2xl cursor-pointer  hover:text-gray-700 transition duration-200 flex gap-5">  Twitter  <div className='py-1'><Twitter /> </div> </div>
+                <div onClick={showx} className="text-2xl cursor-pointer  hover:bg-gray-200 py-2 px-5 transition duration-500 flex gap-5"> <div className='py-1'><Twitter /> </div>  Twitter  </div>
                
-                <div className="text-2xl cursor-pointer  hover:text-gray-700 transition duration-200 flex gap-5">  Youtube  <div className='py-1'> <Youtube /> </div> </div>
+                <div onClick={showyt} className="text-2xl cursor-pointer  hover:bg-gray-200 py-2 px-5 transition duration-500 flex gap-5"> <div className='py-1'> <Youtube /> </div>  Youtube  </div>
             </div>
         </div>        
         </>

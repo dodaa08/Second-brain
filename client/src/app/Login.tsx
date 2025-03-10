@@ -1,5 +1,7 @@
-import { FC } from "react";
+import { FC, useRef} from "react";
 import { X } from 'lucide-react';
+import axios from "axios";
+import { useNavigate } from "react-router";
 
 interface LoginProps {
     open: boolean;
@@ -7,6 +9,37 @@ interface LoginProps {
 }
 
 const Login: FC<LoginProps> = ({ open, onClose }) => {
+    const Name : any = useRef(null);
+    const Password : any = useRef(null);
+    const navigate = useNavigate();
+
+
+    const LogUser = async () => {
+        const url = "http://localhost:3000/api/v1/auth/signin";
+        
+        const data = JSON.stringify({
+            name: Name.current?.value,  // Use .current.value to get the actual input value
+            password: Password.current?.value
+        });
+       
+        try {
+            let result = await axios.post(url, data, { headers: { "Content-Type": "application/json" } });
+        
+            if(result.data.token){
+                localStorage.setItem("token", result.data.token);
+            }
+            
+
+            console.log("User Found:", result.data);  // Use result.data instead of result.respose.data
+            alert("User Created!");
+            navigate("/Landing");
+        } catch (error: any) {
+            console.error("Error:", error);
+            alert("Error: " + (error.response?.data?.message || error.message));
+        }
+    };
+    
+
     return (
         <>
             {
@@ -24,15 +57,17 @@ const Login: FC<LoginProps> = ({ open, onClose }) => {
                                     type="text"
                                     className="border border-gray-300 py-3 px-5 rounded-l focus:outline-none "
                                     placeholder="Enter Name : "
+                                    ref={Name}
                                 />
                                 <input
                                     type="text"
                                     className="border border-gray-300 py-3 px-5 rounded-l focus:outline-none"
                                     placeholder="Enter Password"
+                                    ref={Password}
                                 />
                             </div>
                             <div className="flex justify-center">
-                                <button className="bg-black py-2 px-8 rounded text-white cursor-pointer hover:bg-fuchsia-600 transition duration-200">SignIn</button>
+                                <button className="bg-black py-2 px-8 rounded text-white cursor-pointer hover:bg-fuchsia-600 transition duration-200"  onClick={LogUser} >SignIn</button>
                             </div>
                         </div>
                     </div>

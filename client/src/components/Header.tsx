@@ -1,11 +1,16 @@
 import { useState } from "react";
 import Login from "../app/Login";
+import { FC } from "react";
 import Signup from "../app/Signup";
 
+interface HeaderI{
+    check : boolean;
+}
 
-const Header = ()=>{
+const Header : FC<HeaderI> = ({check})=>{
     const [isOpen, setisOpen] = useState(false);   
     const [isOpenSignup, setIsSignup]  = useState(false);
+
     return(
         <>
          <div className="flex justify-center">
@@ -13,10 +18,13 @@ const Header = ()=>{
                   <div className="py-2">
                     <h1 className="text-3xl font-semibold">Think.</h1>
                   </div>
+                  {
+                    !check && 
                   <div className=" flex gap-5">
                      <button className="text-xl shadow-md py-2 px-5 bg-gray-200  border cursor-pointer hover:bg-gray-300 transition duration-200  border-gray-200 rounded" onClick={()=>setisOpen((e)=>!e)}> Login</button>
                      <button className="text-xl shadow-md py-2 px-5 bg-gray-200  border cursor-pointer hover:bg-gray-300 transition duration-200 rounded" onClick={()=>setIsSignup((e)=>!e)}>Sign Up</button>
                   </div>
+                }
               </div>
               <Login  open={isOpen} onClose={()=>setisOpen(false)}/> 
               <Signup open={isOpenSignup} onClose={()=>setIsSignup(false)}/>
