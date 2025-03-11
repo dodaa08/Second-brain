@@ -24,8 +24,7 @@ const Landing = () => {
   const [type_link, setTypeLink] = useState<"" | "tweet" | "yt">("");
   const [posts, setPosts] = useState<Post[]>([]);
   const [error, setError] = useState<string | null>(null);
-  const [refresh, setRefresh] = useState(false);
- 
+  
   const gapSize = posts.some((post) => post.type_link === "yt") ? "gap-10" : "gap-4";
 
   const [showX, setShowX] = useState(false);
@@ -62,7 +61,8 @@ const Landing = () => {
 
       console.log(result.data.message);
      
-      setPosts((prev) => [...prev, data]); 
+      setPosts((posts)=>[...posts, data]); 
+     
       setOpen(false); 
     } catch (error) {
       console.error("Error while creating post:", error);
@@ -108,9 +108,8 @@ const Landing = () => {
       const response = await axios.delete(`http://localhost:3000/api/v1/content/delete/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
-  
-      setPosts((posts) => posts.filter((post) => post.address !== id));
-      setRefresh((prev)=>!prev);
+
+      setPosts((posts) => posts.filter((post) => post._id !== id));
       console.log(response.data.message);
       alert("Post deleted...");
     } catch (error) {
@@ -140,8 +139,8 @@ const Landing = () => {
         <h1 className="text-2xl font-medium py-10 underline flex justify-center">All posts</h1>
         {error && <p className="text-red-500">{error}</p>}
         <div className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 ${gapSize} ml-40 py-20`}>
-          {filteredPosts.map((post) => (
-            <div key={post.address}>
+          {filteredPosts.map((post, index) => (
+            <div key={index}>
               <Post deleteP={()=>deletePost(post._id)}  heading={post.heading} id={post.address} tags={post.tags} type={post.type_link} />
             </div>
           ))}
