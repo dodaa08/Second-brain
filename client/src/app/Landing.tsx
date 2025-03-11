@@ -43,7 +43,7 @@ const Landing = () => {
     setShowX(false);
     setTypeLink("yt");
     setShowAll(false);
-  }, []);
+  }, [])
 
 
   const createPost = async () => {
