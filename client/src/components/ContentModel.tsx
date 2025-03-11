@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect, useState, Dispatch, SetStateAction } from "react";
 import { X } from 'lucide-react';
 
 interface ContentI {
@@ -9,7 +9,7 @@ interface ContentI {
     type_link : "yt" | "" | "tweet",
     setheading : (value : string)=>void,
     setaddress : (value : string)=>void,
-    settype_link : (value : string)=>void,
+    settype_link: Dispatch<SetStateAction<"" | "yt" | "tweet">>,
     createpost : ()=>void,
 }
 
@@ -71,7 +71,12 @@ const ContentModel: FC<ContentI> = ({ open, onClose, heading, setheading, addres
                                     className="border border-gray-300 py-3 px-5 rounded-l focus:outline-none"
                                     placeholder="yt or tweet: "
                                     value={type_link}
-                                    onChange={(e)=>settype_link(e.target.value)}
+                                    onChange={(e) => {
+                                        const value = e.target.value as "" | "yt" | "tweet"; // Type assertion
+                                        if (value === "" || value === "yt" || value === "tweet") {
+                                            settype_link(value);
+                                        }
+                                    }}
                                 />
                                <div className="flex justify-center text-xl">{errormessage}</div>
                             </div>

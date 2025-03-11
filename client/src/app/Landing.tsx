@@ -11,7 +11,7 @@ import { Plus, Share2 } from "lucide-react";
 
 interface Post {
   heading: string;
-  address: string; // `_id` from API
+  address: string; 
   tags: string[];
   type_link: "yt" | "" | "tweet"; // Matches API,
   _id : string
@@ -60,8 +60,9 @@ const Landing = () => {
       });
 
       console.log(result.data.message);
+      const datanew = { heading, address, type_link, tags: [], _id : result.data._id };
      
-      setPosts((posts)=>[...posts, data]); 
+      setPosts((posts)=>[...posts, datanew]); 
      
       setOpen(false); 
     } catch (error) {
