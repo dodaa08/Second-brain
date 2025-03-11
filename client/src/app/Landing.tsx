@@ -6,11 +6,15 @@ import { useCallback, useEffect, useState, useMemo } from "react";
 import axios from "axios";
 import { Plus, Share2 } from "lucide-react";
 
+// https://second-brain-1-ng79.onrender.com  the backend has been deployed !!!!
+// delete and share
+
 interface Post {
   heading: string;
   address: string; // `_id` from API
   tags: string[];
-  type_link: "yt" | "" | "tweet"; // Matches API
+  type_link: "yt" | "" | "tweet"; // Matches API,
+  _id : string
 }
 
 const Landing = () => {
@@ -20,9 +24,8 @@ const Landing = () => {
   const [type_link, setTypeLink] = useState<"" | "tweet" | "yt">("");
   const [posts, setPosts] = useState<Post[]>([]);
   const [error, setError] = useState<string | null>(null);
-
-  const token = localStorage.getItem("token");
-  
+  const [refresh, setRefresh] = useState(false);
+ 
   const gapSize = posts.some((post) => post.type_link === "yt") ? "gap-10" : "gap-4";
 
   const [showX, setShowX] = useState(false);
@@ -80,6 +83,7 @@ const Landing = () => {
           address: post.link,
           tags: post.tags || [],
           type_link: (["yt", "tweet", ""].includes(post.type_link) ? post.type_link : "") as "yt" | "tweet" | "",
+          _id : post._id
         }));
 
         setPosts(formattedPosts);
@@ -93,21 +97,28 @@ const Landing = () => {
   };
 
 
-  const deletePost = async (id : string)=>{
-     try{
-      
+  const deletePost = async (id : string) => {
+    const token = localStorage.getItem("token"); // Ensure token is fetched inside function
+    if (!token) {
+      alert("Unauthorized: No token found");
+      return;
+    }
+  
+    try {
       const response = await axios.delete(`http://localhost:3000/api/v1/content/delete/${id}`, {
-        headers: { Authorization: `Bearer ${token}`,   mode: 'cors', }
+        headers: { Authorization: `Bearer ${token}` },
       });
-
-      setPosts((post)=>post.filter((posts)=>posts.address!== id));
+  
+      setPosts((posts) => posts.filter((post) => post.address !== id));
+      setRefresh((prev)=>!prev);
       console.log(response.data.message);
       alert("Post deleted...");
-     }
-     catch(error){
-      console.log("Error While deleting..", error);
-     }
-  }
+    } catch (error) {
+      console.error("Error While deleting:", error);
+      alert("Error deleting post. Check console for details.");
+    }
+  };
+  
 
   useEffect(() => {
     if (!localStorage.getItem("token")) return;
@@ -131,7 +142,7 @@ const Landing = () => {
         <div className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 ${gapSize} ml-40 py-20`}>
           {filteredPosts.map((post) => (
             <div key={post.address}>
-              <Post deleteP={()=>deletePost(post.address)}  heading={post.heading} id={post.address} tags={post.tags} type={post.type_link} />
+              <Post deleteP={()=>deletePost(post._id)}  heading={post.heading} id={post.address} tags={post.tags} type={post.type_link} />
             </div>
           ))}
         </div>
