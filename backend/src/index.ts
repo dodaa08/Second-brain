@@ -23,7 +23,7 @@ app.use(express.json());
 
 
 const corsOption = {
-    origin: ['https://thinkkk.vercel.app/'],  // ✅ Remove trailing slash
+    origin: ['*'],  // ✅ Remove trailing slash
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE"],
 };
