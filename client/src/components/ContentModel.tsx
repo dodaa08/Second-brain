@@ -1,19 +1,19 @@
 import { FC, useEffect, useState } from "react";
 import { X } from 'lucide-react';
 
-interface SignupProps {
+interface ContentI {
     open: boolean;
     onClose: () => void;
     heading : string,
     address : string,
-    type_link : string,
+    type_link : "yt" | "" | "tweet",
     setheading : (value : string)=>void,
     setaddress : (value : string)=>void,
     settype_link : (value : string)=>void,
     createpost : ()=>void,
 }
 
-const ContentModel: FC<SignupProps> = ({ open, onClose, heading, setheading, address, setaddress, type_link, settype_link, createpost}) => {
+const ContentModel: FC<ContentI> = ({ open, onClose, heading, setheading, address, setaddress, type_link, settype_link, createpost}) => {
 
     const [error, seterror] = useState(false);
     const [errormessage, setmessage] = useState("");

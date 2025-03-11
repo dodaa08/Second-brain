@@ -1,0 +1,7 @@
+services:
+  - name: my-ts-express-backend
+    type: web
+    env: node
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    plan: free

@@ -138,6 +138,8 @@ const deleteContent = async (req: Request, res: Response) => {
     }
 };
 
+
+
 // Define Routes
 ContentRouter.post("/create", AuthMiddleware, create);
 ContentRouter.delete("/delete/:content_id", AuthMiddleware, deleteContent);

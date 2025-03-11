@@ -13,9 +13,10 @@ interface CardProps {
   tags: string[];
   heading: string;
   type: string;
+  deleteP : ()=>void
 }
 
-const Post: FC<CardProps> = ({ id, tags, heading, type }) => {
+const Post: FC<CardProps> = ({ id, tags, heading, type, deleteP }) => {
   useEffect(() => {
     if (type === "tweet") {
       if (!window.twttr) {
@@ -36,7 +37,7 @@ const Post: FC<CardProps> = ({ id, tags, heading, type }) => {
         <button className="cursor-pointer">
           <Share2 />
         </button>
-        <button className="cursor-pointer">
+        <button onClick={deleteP} className="cursor-pointer">
           <Trash2 />
         </button>
       </div>
