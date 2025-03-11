@@ -47,7 +47,7 @@ const Landing = () => {
 
 
   const createPost = async () => {
-    const api = "http://localhost:3000/api/v1/content/create";
+    const api = "https://second-brain-1-ng79.onrender.com/api/v1/content/create";
     const data = { heading, link: address, type_link, tags: [] };
     const token = localStorage.getItem("token");
 
@@ -73,7 +73,7 @@ const Landing = () => {
   const getAllPosts = async () => {
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.get("http://localhost:3000/api/v1/content/getAll", {
+      const response = await axios.get("https://second-brain-1-ng79.onrender.com/api/v1/content/getAll", {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -105,7 +105,7 @@ const Landing = () => {
     }
   
     try {
-      const response = await axios.delete(`http://localhost:3000/api/v1/content/delete/${id}`, {
+      const response = await axios.delete(`https://second-brain-1-ng79.onrender.com/api/v1/content/delete/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 

@@ -16,7 +16,7 @@ const Signup: FC<SignupProps> = ({ open, onClose }) => {
 
 
     const CreateUser = async () => {
-        const url = "http://localhost:3000/api/v1/auth/signup";
+        const url = "https://second-brain-1-ng79.onrender.com/api/v1/auth/signup";
         
         const data = JSON.stringify({
             name: Name.current?.value,  // Use .current.value to get the actual input value

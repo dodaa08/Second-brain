@@ -15,7 +15,7 @@ const Login: FC<LoginProps> = ({ open, onClose }) => {
 
 
     const LogUser = async () => {
-        const url = "http://localhost:3000/api/v1/auth/signin";
+        const url = "https://second-brain-1-ng79.onrender.com/api/v1/auth/signin";
         
         const data = JSON.stringify({
             name: Name.current?.value,  // Use .current.value to get the actual input value
