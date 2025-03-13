@@ -71,12 +71,7 @@ const ContentModel: FC<ContentI> = ({ open, onClose, heading, setheading, addres
                                     className="border border-gray-300 py-3 px-5 rounded-l focus:outline-none"
                                     placeholder="yt or tweet: "
                                     value={type_link}
-                                    onChange={(e) => {
-                                        const value = e.target.value as "" | "yt" | "tweet"; // Type assertion
-                                        if (value === "" || value === "yt" || value === "tweet") {
-                                            settype_link(value);
-                                        }
-                                    }}
+                                    onChange={(e) => settype_link(e.target.value as "" | "yt" | "tweet")}
                                 />
                                <div className="flex justify-center text-xl">{errormessage}</div>
                             </div>
