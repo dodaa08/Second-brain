@@ -3,6 +3,7 @@ import { Youtube } from 'lucide-react';
 import { FC } from 'react';
 
 import {Brain} from "../icons/Brain";
+import { Link } from 'react-router-dom';
 
 interface SidebarI{
     showx : ()=>void,
@@ -12,16 +13,16 @@ interface SidebarI{
 
 
 const Sidebar : FC<SidebarI> = ({showx, showyt})=>{
-    const handle = ()=>{
-        location.reload();
-    }
+  
+    
     return (
         <>
         <div className="min-h-screen w-72 text-black/95 bg-white">
             <div className="flex py-10 px-5">
-                <div onClick={handle}>
+                <Link to="/">
                 <h1 className="text-3xl flex gap-2 cursor-pointer font-medium"> <div className='py-2'></div>  <div className=''> <Brain /></div> Think. </h1>
-                </div>
+                </Link>
+                
            
             </div>
             <div className="flex flex-col  px-5 py-20  gap-2">
