@@ -23,7 +23,7 @@ app.use(express.json());
 
 
 const corsOption = {
-    origin: ['https://thinkkk.vercel.app', 'http://localhost:3001'],  // ✅ Remove trailing slash
+    origin: ['https://secondb.vercel.app', 'http://localhost:3001'],  // ✅ Remove trailing slash
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE"],
 };
