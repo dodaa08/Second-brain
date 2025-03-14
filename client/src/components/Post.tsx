@@ -1,6 +1,6 @@
 import { FC, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Share2, Trash2 } from "lucide-react";
+import { Share2, Trash2, Pencil } from "lucide-react";
 
 declare global {
   interface Window {
@@ -13,10 +13,11 @@ interface CardProps {
   tags: string[];
   heading: string;
   type: string;
-  deleteP : ()=>void
+  deleteP : ()=>void,
+  updateP : ()=>void,
 }
 
-const Post: FC<CardProps> = ({ id, tags, heading, type, deleteP }) => {
+const Post: FC<CardProps> = ({ id, tags, heading, type, deleteP, updateP}) => {
   useEffect(() => {
     if (type === "tweet") {
       if (!window.twttr) {
@@ -34,12 +35,18 @@ const Post: FC<CardProps> = ({ id, tags, heading, type, deleteP }) => {
     <div className="bg-white border-2 w-max h-max rounded-xl border-gray-200 py-2 px-5">
       {/* Share & Delete Icons */}
       <div className="flex justify-between gap-10 items-center py-2 px-5">
-        <button className="cursor-pointer">
-          <Share2 />
+      <button onClick={updateP}  className="cursor-pointer">
+          <Pencil />
         </button>
+        
         <button onClick={deleteP} className="cursor-pointer">
           <Trash2 />
         </button>
+
+        <button className="cursor-pointer">
+          <Share2 />
+        </button>
+       
       </div>
 
       {/* Heading and Link */}

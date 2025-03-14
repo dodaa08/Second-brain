@@ -10,10 +10,10 @@ interface ContentI {
     setheading : (value : string)=>void,
     setaddress : (value : string)=>void,
     settype_link: Dispatch<SetStateAction<"" | "yt" | "tweet">>,
-    createpost : ()=>void,
+    updatepost : (value : string)=>void,
 }
 
-const ContentModel: FC<ContentI> = ({ open, onClose, heading, setheading, address, setaddress, type_link, settype_link, createpost}) => {
+const UpdatePost: FC<ContentI> = ({ open, onClose, heading, setheading, address, setaddress, type_link, settype_link, updatepost}) => {
 
     const [error, seterror] = useState(false);
     const [errormessage, setmessage] = useState("");
@@ -48,7 +48,7 @@ const ContentModel: FC<ContentI> = ({ open, onClose, heading, setheading, addres
                         </div>
                         <div className="bg-white shadow-lg w-max h-max py-10 flex flex-col">
                             <div className="flex justify-center"> 
-                                <h1 className="text-xl">Create a Post</h1>
+                                <h1 className="text-xl">Update Post</h1>
                             </div>
                             <div className="flex flex-col gap-5 py-10 px-10">
                                 <input
@@ -84,7 +84,7 @@ const ContentModel: FC<ContentI> = ({ open, onClose, heading, setheading, addres
                             <div className="flex justify-center">
                                 { 
                                    error == false &&
-                                    <button onClick={createpost} className="bg-black py-2 px-8 rounded text-white cursor-pointer hover:bg-fuchsia-600 transition duration-200">Create</button>
+                                    <button onClick={()=>updatepost("")} className="bg-black py-2 px-8 rounded text-white cursor-pointer hover:bg-fuchsia-600 transition duration-200">Update</button>
                                 }
                             </div>
                         </div>
@@ -95,4 +95,4 @@ const ContentModel: FC<ContentI> = ({ open, onClose, heading, setheading, addres
     )
 }
 
-export default ContentModel;
+export default UpdatePost;

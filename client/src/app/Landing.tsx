@@ -5,7 +5,8 @@ import ContentModel from "../components/ContentModel";
 import { useCallback, useEffect, useState, useMemo } from "react";
 import axios from "axios";
 import { Plus, Share2 } from "lucide-react";
-
+import UpdatePost from "../components/UpdatePost";
+import Loading from "./Loading";
 // https://second-brain-1-ng79.onrender.com  the backend has been deployed !!!!
 // delete and share
 
@@ -19,14 +20,17 @@ interface Post {
 
 const Landing = () => {
   const [open, setOpen] = useState(false);
+  const [openUpdate, setopenUpdate] = useState(false);
   const [heading, setHeading] = useState("");
   const [address, setAddress] = useState("");
   const [type_link, setTypeLink] = useState<"" | "tweet" | "yt">("");
   const [posts, setPosts] = useState<Post[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const [loader, setloader] = useState(false);
+  
   
   const gapSize = posts.some((post) => post.type_link === "yt") ? "gap-10" : "gap-4";
-
+  const [headline, setheadline] = useState("All posts");
   const [showX, setShowX] = useState(false);
   const [showYT, setShowYT] = useState(false);
   const [showAll, setShowAll] = useState(true);
@@ -63,7 +67,7 @@ const Landing = () => {
       const datanew = { heading, address, type_link, tags: [], _id : result.data._id };
      
       setPosts((posts)=>[...posts, datanew]); 
-     
+      alert("Post Created..")
       setOpen(false); 
     } catch (error) {
       console.error("Error while creating post:", error);
@@ -72,8 +76,14 @@ const Landing = () => {
   };
 
   const getAllPosts = async () => {
+    const token = localStorage.getItem("token");
+  if (!token) {
+    setError("Unauthorized: No token found");
+    return;
+  }
+    setloader(true);
     try {
-      const token = localStorage.getItem("token");
+     
       const response = await axios.get("https://second-brain-1-ng79.onrender.com/api/v1/content/getAll", {
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -88,12 +98,16 @@ const Landing = () => {
         }));
 
         setPosts(formattedPosts);
+        setloader(false)
       } else {
         console.error("Invalid API response, expected array but got:", response.data);
       }
     } catch (error) {
       console.error("Error fetching posts:", error);
       setError("Failed to load posts");
+    }
+    finally {
+      setloader(false); // Stop loader after fetching
     }
   };
 
@@ -120,10 +134,40 @@ const Landing = () => {
   };
   
 
+
+  const updatePost = async ()=>{
+    const api = "http://localhost:3000/api/v1/content/update/67d2702185336317499e6419";
+    const data = { heading, link: address, type_link, tags: [] };
+    const token = localStorage.getItem("token");
+
+    try {
+      const result = await axios.post(api, data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
+
+      console.log(result.data.message);
+      const datanew = { heading, address, type_link, tags: [], _id : result.data._id };
+     
+      setPosts((posts)=>[...posts, datanew]); 
+      alert("Post Updated..")
+      setOpen(false); 
+    } catch (error) {
+      console.error("Error while creating post:", error);
+      setError("Error while creating post");
+    }
+  }
+
   useEffect(() => {
     if (!localStorage.getItem("token")) return;
     getAllPosts();
   }, []);
+  
+  useEffect(()=>{
+    setheadline(showX == true ? "Tweet" : showYT == true ? "Youtube" : "All posts");
+  },[showX, showYT])
 
   const filteredPosts = useMemo(() => {
     return posts.filter(
@@ -137,14 +181,23 @@ const Landing = () => {
       <Sidebar showx={handleX} showyt={handleYT} />
 
       <div className="flex flex-col w-max">
-        <h1 className="text-2xl font-medium py-10 underline flex justify-center">All posts</h1>
+          <h1 className="text-2xl font-medium py-10 underline flex justify-center">{headline}</h1>
         {error && <p className="text-red-500">{error}</p>}
         <div className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 ${gapSize} ml-40 py-20`}>
-          {filteredPosts.map((post, index) => (
+          {
+          loader ?
+          <div className="">
+            <Loading />
+          </div>
+          :
+          
+          filteredPosts.map((post, index) => (
             <div key={index}>
-              <Post deleteP={()=>deletePost(post._id)}  heading={post.heading} id={post.address} tags={post.tags} type={post.type_link} />
+              <Post updateP={() => setopenUpdate((prev) => !prev)}  deleteP={()=>deletePost(post._id)}  heading={post.heading} id={post.address} tags={post.tags} type={post.type_link} />
             </div>
-          ))}
+          ))
+        
+          }
         </div>
       </div>
 
@@ -161,6 +214,22 @@ const Landing = () => {
           settype_link={setTypeLink}
         />
       )}
+
+      {
+        openUpdate && 
+
+        <UpdatePost 
+          updatepost={updatePost}
+          open={openUpdate}
+          onClose={() => setopenUpdate(false)}
+          heading={heading}
+          address={address}
+          setaddress={setAddress}
+          setheading={setHeading}
+          type_link={type_link}
+          settype_link={setTypeLink}
+        />
+      }
 
       <div className="flex gap-10 py-10 px-5">
         <Button text="Add content" varient="primary" startIcon={<Plus />} onClick={() => setOpen((prev) => !prev)} />

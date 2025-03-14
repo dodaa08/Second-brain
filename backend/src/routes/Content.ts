@@ -6,7 +6,6 @@ import { isValidObjectId } from "mongoose"; // Validate MongoDB IDs
 
 const ContentRouter = express.Router();
 
-
 interface AuthRequest extends Request {
     userId?: string;
 }
@@ -91,30 +90,26 @@ const getAllposts = async (req : Request, res : Response)=>{
 }
 
 
-
-
 // Update Content
 const updateContent = async (req: Request, res: Response) => {
-    const { content_id, ...updateData } = req.body;
+    const {content_id} = req.params; 
+    const {type_link, link, heading, tags} = req.body;
 
-    if (!content_id || !isValidObjectId(content_id)) {
-        return res.status(400).json({ error: "Invalid or missing content_id." });
+    if(!content_id || !isValidObjectId(content_id)){
+        return res.status(400).json({error : "Invalid or missing content_id."});
     }
 
-    const updateCheck = UpdateSchema.safeParse(updateData);
-    if (!updateCheck.success) {
-        return res.status(400).json({ error: "Invalid update data." });
-    }
+    try{
+        const response = await content.updateOne({_id : content_id, link : link, type_link : type_link, heading : heading, tags : tags});
 
-    try {
-        const result = await content.updateOne({ _id: content_id }, { $set: updateCheck.data });
-        if (result.modifiedCount === 0) {
-            return res.status(404).json({ error: "Content not found or not modified." });
+        if(!response){
+            return res.status(400).send("Content not updated..");
         }
-        res.status(200).json({ message: "Content Updated." });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: "Internal Server Error" });
+
+        res.status(200).send("Content Updated....");
+    }
+    catch(error){
+        console.log(`Error : ${error}`); 
     }
 };
 

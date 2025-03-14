@@ -2,7 +2,8 @@ import { BrowserRouter, Route } from "react-router-dom";
 import { Routes } from "react-router";
 import Landing from "./app/Landing";
 import Home from "./app/Home";
-
+import Nopage from "./app/Nopage";
+import ErrorBoundary from "./ErrorBoundary";
 
 const App: React.FC = () => {
   const routes = [
@@ -12,8 +13,12 @@ const App: React.FC = () => {
     },
     {
       path: "/Landing",
-      element: <Landing />,
+      element:<ErrorBoundary>  <Landing /> </ErrorBoundary> 
     },
+    {
+      path : "*",
+      element : <Nopage />
+    }
   ];
 
   return (
