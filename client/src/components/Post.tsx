@@ -2,6 +2,8 @@ import { FC, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Share2, Trash2, Pencil } from "lucide-react";
 
+
+
 declare global {
   interface Window {
     twttr?: any;

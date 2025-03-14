@@ -136,7 +136,7 @@ const Landing = () => {
 
 
   const updatePost = async ()=>{
-    const api = "http://localhost:3000/api/v1/content/update/67d2702185336317499e6419";
+    const api = `http://localhost:3000/api/v1/content/update/271872812718287`;
     const data = { heading : heading, link: address, type_link : type_link, tags: ["#"] };
     const token = localStorage.getItem("token");
 
