@@ -29,7 +29,6 @@ const corsOption = {
 };
 app.use(cors(corsOption));
 
-
 app.use("/api/v1/auth", AuthRouter);
 app.use("/api/v1/content", ContentRouter);
 
