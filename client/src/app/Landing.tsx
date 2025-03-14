@@ -141,7 +141,7 @@ const Landing = () => {
     const token = localStorage.getItem("token");
 
     try {
-      const result = await axios.post(api, data, {
+      const result = await axios.put(api, data, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
