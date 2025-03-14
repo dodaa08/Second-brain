@@ -11,9 +11,7 @@ interface SidebarI{
 }
 
 
-
 const Sidebar : FC<SidebarI> = ({showx, showyt})=>{
-  
     
     return (
         <>
