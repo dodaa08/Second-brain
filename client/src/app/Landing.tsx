@@ -137,7 +137,7 @@ const Landing = () => {
 
   const updatePost = async ()=>{
     const api = "http://localhost:3000/api/v1/content/update/67d2702185336317499e6419";
-    const data = { heading, link: address, type_link, tags: [] };
+    const data = { heading : heading, link: address, type_link : type_link, tags: ["#"] };
     const token = localStorage.getItem("token");
 
     try {
@@ -156,7 +156,7 @@ const Landing = () => {
       setOpen(false); 
     } catch (error) {
       console.error("Error while creating post:", error);
-      setError("Error while creating post");
+      setError("Error while updating post");
     }
   }
 
